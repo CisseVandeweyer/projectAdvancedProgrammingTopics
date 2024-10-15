@@ -1,5 +1,9 @@
 # projectAdvancedProgrammingTopics
 
+## Team leden
+
+Sander Jannes - Cisse Vandeweyer
+
 ## Project beschrijving
 
 Onderwerp: Vastgoedplatform
@@ -12,7 +16,7 @@ Microservices:
 
 ## Docker containers
 
+## Componenten
 
-## Team leden
+## Testing (Postman)
 
-Sander Jannes - Cisse Vandeweyer
