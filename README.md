@@ -1,7 +1,7 @@
 # projectAdvancedProgrammingTopics
 
-## Team leden
 
+| Team leden |
 | --------- |
 | Sander Jannes |
 | Cisse Vandeweyer | 
