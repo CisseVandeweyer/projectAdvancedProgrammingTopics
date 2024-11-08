@@ -3,8 +3,8 @@
 ## Team leden
 
 | --------- |
-| Sander Jannes | 3APP02 |
-| Cisse Vandeweyer | 3APP02 |
+| Sander Jannes |
+| Cisse Vandeweyer | 
 
 ## Project beschrijving
 
