@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/* docker run --name mysql-tenant -p 3333:3306 -e MYSQL_ROOT_PASSWORD=abc123 -d mysql */
+// docker run --name mysql-tenant -p 3333:3306 -e MYSQL_ROOT_PASSWORD=abc123 -d mysql
 
 @RestController
 @RequestMapping("/api/tenant")
