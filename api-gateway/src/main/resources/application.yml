@@ -1,0 +1,21 @@
+server:
+  port: 8083
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
+    reactor.netty: TRACE
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: home-service
+          uri: http://${HOME_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/homes
+            - Method=POST
+          filters:
+            - SetPath=/api/home/all

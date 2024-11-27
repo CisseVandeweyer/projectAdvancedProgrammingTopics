@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mongo-home:
+    image: mongo:latest
+    container_name: mongo-home
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_home_data:/data/db
+
+  home-service:
+    image: sanderjannes/
+    container_name: home-service
+    ports:
+      - 8081:8081
+    environment:
+      PRODUCT_SERVICE_BASEURL: home-service:8080
+      MONGO_DB_HOST: mongo-home:27017
+      MONGO_DB_NAME: home-service
+    depends_on:
+      - mongo-home
+
+volumes:
+  mongodb_home_data:
