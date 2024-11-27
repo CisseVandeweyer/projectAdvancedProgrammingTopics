@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/home")
 @RequiredArgsConstructor
 public class HomeController {
-    private HomeService homeService;
+    private final HomeService homeService;
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
