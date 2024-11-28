@@ -4,10 +4,7 @@ import fact.it.homeservice.dto.HomeResponse;
 import fact.it.homeservice.service.HomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,7 +18,13 @@ public class HomeController {
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<HomeResponse> getAllTenants() {
+    public List<HomeResponse> getAllHomes() {
         return homeService.getAllHomes();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public HomeResponse getHomeById(@PathVariable String id) {
+        return homeService.getHomeById(id);
     }
 }

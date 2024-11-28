@@ -33,6 +33,11 @@ public class HomeService {
         return homes.stream().map(this::mapToHomeResponse).toList();
     }
 
+    public HomeResponse getHomeById(String id) {
+        Home home = homeRepository.findHomeById(id);
+        return mapToHomeResponse(home);
+    }
+
     private HomeResponse mapToHomeResponse(Home home) {
         return HomeResponse.builder()
                 .id(home.getId())
