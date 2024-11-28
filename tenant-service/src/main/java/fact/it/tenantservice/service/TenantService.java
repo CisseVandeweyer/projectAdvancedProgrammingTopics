@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,11 +24,19 @@ public class TenantService {
             Tenant tenant = Tenant.builder()
                     .name("Jos")
                     .description("fffssqfssqsqfsq")
-                    .email("dfqsfsqf@dfsqdfsq")
-                    .password("kaas")
+                    .email("jos@jos.com")
+                    .homeId("67487ccf610fe11bd3fbf38c")
+                    .build();
+
+            Tenant tenant1 = Tenant.builder()
+                    .name("Marie")
+                    .description("hello")
+                    .email("marie@dfqfqs.com")
+                    .homeId("67487ccf610fe11bd3fbf38d")
                     .build();
 
             tenantRepository.save(tenant);
+            tenantRepository.save(tenant1);
         }
     }
 
@@ -35,7 +44,6 @@ public class TenantService {
         Tenant tenant = Tenant.builder()
                 .name(tenantRequest.getName())
                 .email(tenantRequest.getEmail())
-                .password(tenantRequest.getPassword())
                 .description(tenantRequest.getDescription())
                 .build();
 
@@ -43,16 +51,24 @@ public class TenantService {
     }
 
     public List<TenantResponse> getAllTenants() {
-        List<Tenant> products = tenantRepository.findAll();
-        return products.stream().map(this::mapToTenantResponse).toList();
+        List<Tenant> tenants = tenantRepository.findAll();
+        return tenants.stream().map(this::mapToTenantResponse).toList();
+    }
+
+    public List<TenantResponse> getTenantsByIds(List<Long> ids) {
+        List<Tenant> tenants = tenantRepository.findAllByIds(ids);
+        return tenants.stream().map(this::mapToTenantResponse).toList();
+    }
+
+    public TenantResponse getTenantByHomeId(String homeId) {
+        Optional<Tenant> tenant = tenantRepository.findAllByHomeId(homeId).stream().findFirst();
+        return tenant.map(this::mapToTenantResponse).orElse(null);
     }
 
     private TenantResponse mapToTenantResponse(Tenant tenant) {
         return TenantResponse.builder()
-                .id(tenant.getId())
                 .name(tenant.getName())
                 .email(tenant.getEmail())
-                .password(tenant.getPassword())
                 .description(tenant.getDescription())
                 .build();
     }

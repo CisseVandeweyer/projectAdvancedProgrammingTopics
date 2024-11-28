@@ -5,12 +5,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class HomeResponse {
     private String id;
-    private String name;
-    private String location;
+
+    private String address;
+    private String type;
+    private String status;
+    private String yearOfConstruction;
+
+    private TenantResponse activeTenant;
 }

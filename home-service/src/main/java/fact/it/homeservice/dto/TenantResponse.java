@@ -1,4 +1,4 @@
-package fact.it.tenantservice.dto;
+package fact.it.homeservice.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TenantRequest {
+public class TenantResponse {
     private String name;
     private String email;
     private String description;

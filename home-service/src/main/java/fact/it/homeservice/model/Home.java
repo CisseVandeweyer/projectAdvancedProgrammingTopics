@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Document(value = "home")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,6 +16,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 public class Home {
     private String id;
-    private String name;
-    private String location;
+
+    private String address;
+    private String type;
+    private String yearOfConstruction;
+
+//    private Long activeTenantId;
 }
