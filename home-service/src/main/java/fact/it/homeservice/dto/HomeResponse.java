@@ -16,8 +16,7 @@ public class HomeResponse {
 
     private String address;
     private String type;
-    private String status;
     private String yearOfConstruction;
 
-    private TenantResponse activeTenant;
+    private TenantResponse tenant;
 }

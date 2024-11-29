@@ -25,14 +25,14 @@ public class TenantService {
                     .name("Jos")
                     .description("fffssqfssqsqfsq")
                     .email("jos@jos.com")
-                    .homeId("67487ccf610fe11bd3fbf38c")
+                    .homeId("67499f56d8cd7f17bc5ab6eb")
                     .build();
 
             Tenant tenant1 = Tenant.builder()
                     .name("Marie")
                     .description("hello")
                     .email("marie@dfqfqs.com")
-                    .homeId("67487ccf610fe11bd3fbf38d")
+                    .homeId("67499f56d8cd7f17bc5ab6ec")
                     .build();
 
             tenantRepository.save(tenant);

@@ -1,5 +1,6 @@
 package fact.it.homeservice.service;
 
+import fact.it.homeservice.dto.HomeRequest;
 import fact.it.homeservice.dto.HomeResponse;
 import fact.it.homeservice.dto.TenantResponse;
 import fact.it.homeservice.model.Home;
@@ -52,6 +53,24 @@ public class HomeService {
         return mapToHomeResponse(home);
     }
 
+    public void addHome(HomeRequest homeRequest){
+        Home home = Home.builder()
+                .type(homeRequest.getType())
+                .yearOfConstruction(homeRequest.getYearOfConstruction())
+                .address(homeRequest.getAddress())
+                .build();
+
+        homeRepository.save(home);
+    }
+
+    public void deleteHome(String id) {
+        Home home = homeRepository.findHomeById(id);
+
+        if (home != null) {
+            homeRepository.delete(home);
+        }
+    }
+
     private HomeResponse mapToHomeResponse(Home home) {
         String tenantServiceBaseUrl = "localhost:8082";
 
@@ -80,8 +99,7 @@ public class HomeService {
                 .address(home.getAddress())
                 .yearOfConstruction(home.getYearOfConstruction())
                 .type(home.getType())
-                .status(tenant != null ? "rented": "not rented")
-                .activeTenant(tenant)
+                .tenant(tenant)
                 .build();
     }
 }

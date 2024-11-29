@@ -1,5 +1,6 @@
 package fact.it.homeservice.controller;
 
+import fact.it.homeservice.dto.HomeRequest;
 import fact.it.homeservice.dto.HomeResponse;
 import fact.it.homeservice.service.HomeService;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,18 @@ public class HomeController {
     @ResponseStatus(HttpStatus.OK)
     public HomeResponse getHomeById(@PathVariable String id) {
         return homeService.getHomeById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void addHome
+            (@RequestBody HomeRequest tenantRequest) {
+        homeService.addHome(tenantRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteHome(@PathVariable String id) {
+        homeService.deleteHome(id);
     }
 }
