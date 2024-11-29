@@ -1,0 +1,54 @@
+services:
+  mongo-home:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_home_data:/data/db
+
+  mysql-tenant:
+    image: mysql:latest
+    ports:
+      - 3333:3306
+    volumes:
+      - mysql_tenant_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123
+
+  home-service:
+    image: sanderjannes/home-service
+    ports:
+      - 8081:8081
+    environment:
+      MONGO_DB_HOST: mongo-home
+      MONGO_DB_PORT: 27017
+    depends_on:
+      - mongo-home
+
+  tenant-service:
+    image: sanderjannes/tenant-service
+    ports:
+      - 8082:8082
+    environment:
+      MYSQL_DB_USERNAME: root
+      MYSQL_DB_PASSWORD: abc123
+      MYSQL_DB_HOST: mysql-tenant
+      MYSQL_DB_PORT: 3306
+
+  api-gateway:
+    depends_on:
+      - home-service
+      - tenant-service
+    image: sanderjannes/api-gateway
+    ports:
+      - 8085:8085
+    links:
+      - home-service
+      - tenant-service
+    environment:
+      HOME_SERVICE_BASEURL: home-service:8081
+      TENANT_SERVICE_BASEURL: tenant-service:8082
+
+volumes:
+  mongodb_home_data:
+  mysql_tenant_data:

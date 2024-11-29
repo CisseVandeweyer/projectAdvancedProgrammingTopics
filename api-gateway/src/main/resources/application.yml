@@ -1,0 +1,37 @@
+server:
+  port: 8085
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
+    reactor.netty: TRACE
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: home-service
+          uri: http://${HOME_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/homes
+            - Method=GET
+          filters:
+            - SetPath=/api/home/all
+
+        - id: home-service-id
+          uri: http://${HOME_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/home/**
+            - Method=GET
+          filters:
+            - RewritePath=/home/?(?<segment>.*), /api/home/$\{segment}
+
+        - id: tenant-service
+          uri: http://${TENANT_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/tenants
+            - Method=GET
+          filters:
+            - SetPath=/api/tenant/all
