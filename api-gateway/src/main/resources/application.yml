@@ -12,7 +12,7 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: home-service
+        - id: home-service-all
           uri: http://${HOME_SERVICE_BASEURL:localhost:8081}
           predicates:
             - Path=/homes
@@ -20,13 +20,29 @@ spring:
           filters:
             - SetPath=/api/home/all
 
-        - id: home-service-id
+        - id: home-service-all-payments
           uri: http://${HOME_SERVICE_BASEURL:localhost:8081}
           predicates:
-            - Path=/home/**
+            - Path=/home/{id}/payments
             - Method=GET
           filters:
-            - RewritePath=/home/?(?<segment>.*), /api/home/$\{segment}
+            - RewritePath=/home/?(?<id>.*)/payments, /api/home/$\{id}/payments
+
+        - id: home-service-post
+          uri: http://${HOME_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/home
+            - Method=POST
+          filters:
+            - SetPath=/api/home
+
+        - id: home-service-put-delete
+          uri: http://${HOME_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/home/{id}
+            - Method=PUT, DELETE
+          filters:
+            - RewritePath=/home/?(?<id>.*), /api/home/$\{id}
 
         - id: tenant-service
           uri: http://${TENANT_SERVICE_BASEURL:localhost:8082}

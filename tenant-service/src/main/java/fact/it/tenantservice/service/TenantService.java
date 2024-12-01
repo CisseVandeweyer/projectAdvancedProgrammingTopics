@@ -25,7 +25,7 @@ public class TenantService {
                     .name("Jos")
                     .description("fffssqfssqsqfsq")
                     .email("jos@jos.com")
-                    .homeId("67499f56d8cd7f17bc5ab6eb")
+                    .homeId("6749d32a57152b1518eb50e3")
                     .build();
 
             Tenant tenant1 = Tenant.builder()

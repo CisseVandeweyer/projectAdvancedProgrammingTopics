@@ -2,19 +2,20 @@ package fact.it.homeservice.service;
 
 import fact.it.homeservice.dto.HomeRequest;
 import fact.it.homeservice.dto.HomeResponse;
+import fact.it.homeservice.dto.PaymentResponse;
 import fact.it.homeservice.dto.TenantResponse;
 import fact.it.homeservice.model.Home;
 import fact.it.homeservice.repository.HomeRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,13 @@ import java.util.Optional;
 public class HomeService {
     private final HomeRepository homeRepository;
     private final WebClient webClient;
+
+    @Value("${tenantService.baseurl}")
+    private String tenantServiceBaseUrl;
+
+    @Value("${maintenanceService.baseurl}")
+    private String maintenanceServiceBaseUrl;
+
 
     @PostConstruct
     public void loadData() {
@@ -63,6 +71,18 @@ public class HomeService {
         homeRepository.save(home);
     }
 
+    public void updateHome(String id, HomeRequest homeRequest) {
+        Home home = homeRepository.findHomeById(id);
+
+        if (home != null) {
+            home.setAddress(homeRequest.getAddress());
+            home.setType(home.getType());
+            home.setYearOfConstruction(homeRequest.getYearOfConstruction());
+
+            homeRepository.save(home);
+        }
+    }
+
     public void deleteHome(String id) {
         Home home = homeRepository.findHomeById(id);
 
@@ -71,23 +91,16 @@ public class HomeService {
         }
     }
 
+    public List<PaymentResponse> getPayments(String id) {
+        Home home = homeRepository.findHomeById(id);
+
+        if (home != null) {
+            // Request naar payment service
+        }
+        return new ArrayList<>();
+    }
+
     private HomeResponse mapToHomeResponse(Home home) {
-        String tenantServiceBaseUrl = "localhost:8082";
-
-//        TenantResponse[] tenants = webClient.get()
-//            .uri("http://" + tenantServiceBaseUrl + "/api/tenant",
-//                    uriBuilder -> uriBuilder.queryParam("ids", home.getTenantIds()).build())
-//            .retrieve()
-//            .bodyToMono(TenantResponse[].class)
-//            .block();
-
-//        Optional<TenantResponse> activeTenant = Optional.empty();
-//        if (tenants != null) {
-//            activeTenant = Arrays.stream(tenants)
-//                    .filter(TenantResponse::isActive)
-//                    .findFirst();
-//        }
-
         TenantResponse tenant = webClient.get()
                 .uri("http://" + tenantServiceBaseUrl + "/api/tenant/home/{id}", home.getId())
                 .retrieve()

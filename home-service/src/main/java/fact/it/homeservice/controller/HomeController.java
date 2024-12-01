@@ -2,6 +2,7 @@ package fact.it.homeservice.controller;
 
 import fact.it.homeservice.dto.HomeRequest;
 import fact.it.homeservice.dto.HomeResponse;
+import fact.it.homeservice.dto.PaymentResponse;
 import fact.it.homeservice.service.HomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,17 +24,29 @@ public class HomeController {
         return homeService.getAllHomes();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/maintenances")
     @ResponseStatus(HttpStatus.OK)
     public HomeResponse getHomeById(@PathVariable String id) {
         return homeService.getHomeById(id);
     }
 
+    @GetMapping("/{id}/payments")
+    @ResponseStatus(HttpStatus.OK)
+    public List<PaymentResponse> getAllPayments(@PathVariable String id) {
+        return homeService.getPayments(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void addHome
-            (@RequestBody HomeRequest tenantRequest) {
-        homeService.addHome(tenantRequest);
+            (@RequestBody HomeRequest homeRequest) {
+        homeService.addHome(homeRequest);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateHome(@PathVariable String id, @RequestBody HomeRequest homeRequest) {
+        homeService.updateHome(id, homeRequest);
     }
 
     @DeleteMapping("/{id}")
