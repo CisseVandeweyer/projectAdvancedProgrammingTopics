@@ -15,30 +15,30 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: abc123
 
-  mysql-home-tenant:
+  mysql-contract:
     image: mysql:latest
     ports:
       - 3334:3306
     volumes:
-      - mysql_home_tenant_data:/var/lib/mysql
+      - mysql_contract_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: abc123
 
-  home-tenant-service:
-    image: sanderjannes/home-tenant-service
-    depends_on:
-      - mysql-home-tenant
-      - home-service
-      - tenant-service
+  contract-service:
+    image: sanderjannes/contract-service
     ports:
       - 8086:8086
     environment:
       MYSQL_DB_USERNAME: root
       MYSQL_DB_PASSWORD: abc123
-      MYSQL_DB_HOST: mysql-home-tenant
+      MYSQL_DB_HOST: mysql-contract
       MYSQL_DB_PORT: 3306
       HOME_SERIVCE_BASEURL: home-service:8081
-      TENANT_SERIVCE_BASEURL: tenant-service:8082
+      TENANT_SERVICE_BASEURL: tenant-service:8082
+    depends_on:
+      - mysql-contract
+      - home-service
+      - tenant-service
 
   home-service:
     image: sanderjannes/home-service
@@ -67,17 +67,20 @@ services:
     depends_on:
       - home-service
       - tenant-service
+      - contract-service
     image: sanderjannes/api-gateway
     ports:
       - 8085:8085
     links:
       - home-service
       - tenant-service
+      - contract-service
     environment:
       HOME_SERVICE_BASEURL: home-service:8081
       TENANT_SERVICE_BASEURL: tenant-service:8082
+      CONTRACT_SERVICE_BASEURL: contract-service:8086
 
 volumes:
   mongodb_home_data:
   mysql_tenant_data:
-  mysql_home_tenant_data:
+  mysql_contract_data:

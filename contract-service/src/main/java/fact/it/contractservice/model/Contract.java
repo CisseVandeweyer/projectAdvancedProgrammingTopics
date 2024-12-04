@@ -1,19 +1,18 @@
-package fact.it.hometenantservice.model;
+package fact.it.contractservice.model;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
-@Table(name = "homeTenants")
+@Table(name = "contract")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HomeTenant {
+public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

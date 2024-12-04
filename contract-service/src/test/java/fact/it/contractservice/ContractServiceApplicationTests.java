@@ -1,10 +1,10 @@
-package fact.it.hometenantservice;
+package fact.it.contractservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HomeTenantServiceApplicationTests {
+class ContractServiceApplicationTests {
 
     @Test
     void contextLoads() {

@@ -32,7 +32,7 @@ public class HomeService {
 
     @PostConstruct
     public void loadData() {
-        mongoTemplate.getDb().drop();
+//        mongoTemplate.getDb().drop();
 
         if (homeRepository.count() <= 0) {
             Home home = Home.builder()

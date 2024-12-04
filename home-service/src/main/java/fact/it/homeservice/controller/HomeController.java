@@ -17,17 +17,17 @@ import java.util.List;
 public class HomeController {
     private final HomeService homeService;
 
-//    @GetMapping("/all")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<HomeResponse> getAllHomes() {
-//        return homeService.getAllHomes();
-//    }
-//
-//    @GetMapping("/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public HomeResponse getHomeById(@PathVariable String id) {
-//        return homeService.getHomeById(id);
-//    }
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<HomeResponse> getAllHomes() {
+        return homeService.getAllHomes();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public HomeResponse getHomeById(@PathVariable String id) {
+        return homeService.getHomeById(id);
+    }
 
 //    @GetMapping("/{id}/payments")
 //    @ResponseStatus(HttpStatus.OK)

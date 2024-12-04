@@ -1,4 +1,4 @@
-package fact.it.hometenantservice.config;
+package fact.it.contractservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

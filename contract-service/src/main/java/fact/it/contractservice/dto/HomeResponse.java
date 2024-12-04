@@ -1,4 +1,4 @@
-package fact.it.hometenantservice.dto;
+package fact.it.contractservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

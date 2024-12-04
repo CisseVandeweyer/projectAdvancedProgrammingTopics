@@ -20,6 +20,14 @@ spring:
           filters:
             - SetPath=/api/home/all
 
+        - id: contract-service-per-home
+          uri: http://${CONTRACT_SERVICE_BASEURL:localhost:8086}
+          predicates:
+            - Path=/contract/home/{id}
+            - Method=GET
+          filters:
+            - RewritePath=/contract/home/?(?<id>.*), /api/contract/home/$\{id}
+
         - id: home-service-all-payments
           uri: http://${HOME_SERVICE_BASEURL:localhost:8081}
           predicates:

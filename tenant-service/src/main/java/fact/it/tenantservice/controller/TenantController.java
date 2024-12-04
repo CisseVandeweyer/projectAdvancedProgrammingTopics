@@ -21,28 +21,15 @@ import java.util.stream.Collectors;
 public class TenantController {
     private final TenantService tenantService;
 
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.OK)
-//    public void createTenant
-//            (@RequestBody TenantRequest tenantRequest) {
-//        tenantService.createTenant(tenantRequest);
-//    }
-
-//    @GetMapping
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<TenantResponse> getTenantsByIds(@RequestParam List<Long> ids) {
-//        return tenantService.getTenantsByIds(ids);
-//    }
-
-//    @GetMapping("/all")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<TenantResponse> getAllTenants() {
-//        return tenantService.getAllTenants();
-//    }
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TenantResponse> getAllTenants() {
+        return tenantService.getAllTenants();
+    }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TenantResponse getTenantById(@PathVariable String id) {
+    public TenantResponse getTenantById(@PathVariable Long id) {
         return tenantService.getTenantById(id);
     }
 }

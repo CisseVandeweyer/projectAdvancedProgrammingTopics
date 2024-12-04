@@ -1,13 +1,13 @@
-package fact.it.hometenantservice;
+package fact.it.contractservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HomeTenantServiceApplication {
+public class ContractServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HomeTenantServiceApplication.class, args);
+        SpringApplication.run(ContractServiceApplication.class, args);
     }
 
 }

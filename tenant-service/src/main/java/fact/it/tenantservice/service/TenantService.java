@@ -40,27 +40,12 @@ public class TenantService {
         }
     }
 
-//    public void createTenant(TenantRequest tenantRequest){
-//        Tenant tenant = Tenant.builder()
-//                .name(tenantRequest.getName())
-//                .email(tenantRequest.getEmail())
-//                .description(tenantRequest.getDescription())
-//                .build();
-//
-//        tenantRepository.save(tenant);
-//    }
-//
-//    public List<TenantResponse> getAllTenants() {
-//        List<Tenant> tenants = tenantRepository.findAll();
-//        return tenants.stream().map(this::mapToTenantResponse).toList();
-//    }
-//
-//    public List<TenantResponse> getTenantsByIds(List<Long> ids) {
-//        List<Tenant> tenants = tenantRepository.findAllByIds(ids);
-//        return tenants.stream().map(this::mapToTenantResponse).toList();
-//    }
+    public List<TenantResponse> getAllTenants() {
+        List<Tenant> tenants = tenantRepository.findAll();
+        return tenants.stream().map(this::mapToTenantResponse).toList();
+    }
 
-    public TenantResponse getTenantById(String tenantId) {
+    public TenantResponse getTenantById(Long tenantId) {
         Tenant tenant = tenantRepository.findTenantById(tenantId);
         return mapToTenantResponse(tenant);
     }
