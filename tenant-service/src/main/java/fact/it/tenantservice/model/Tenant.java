@@ -18,6 +18,4 @@ public class Tenant {
     private String name;
     private String email;
     private String description;
-
-    private String homeId;
 }

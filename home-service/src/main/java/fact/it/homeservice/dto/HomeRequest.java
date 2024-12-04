@@ -14,4 +14,5 @@ public class HomeRequest {
     private String address;
     private String type;
     private String yearOfConstruction;
+    private Long userId;
 }

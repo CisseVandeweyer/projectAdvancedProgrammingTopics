@@ -2,7 +2,6 @@ package fact.it.homeservice.controller;
 
 import fact.it.homeservice.dto.HomeRequest;
 import fact.it.homeservice.dto.HomeResponse;
-import fact.it.homeservice.dto.PaymentResponse;
 import fact.it.homeservice.service.HomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,22 +17,28 @@ import java.util.List;
 public class HomeController {
     private final HomeService homeService;
 
-    @GetMapping("/all")
-    @ResponseStatus(HttpStatus.OK)
-    public List<HomeResponse> getAllHomes() {
-        return homeService.getAllHomes();
-    }
+//    @GetMapping("/all")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<HomeResponse> getAllHomes() {
+//        return homeService.getAllHomes();
+//    }
+//
+//    @GetMapping("/{id}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public HomeResponse getHomeById(@PathVariable String id) {
+//        return homeService.getHomeById(id);
+//    }
 
-    @GetMapping("/{id}/maintenances")
-    @ResponseStatus(HttpStatus.OK)
-    public HomeResponse getHomeById(@PathVariable String id) {
-        return homeService.getHomeById(id);
-    }
+//    @GetMapping("/{id}/payments")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<PaymentResponse> getAllPayments(@PathVariable String id) {
+//        return homeService.getPayments(id);
+//    }
 
-    @GetMapping("/{id}/payments")
+    @GetMapping("/user/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<PaymentResponse> getAllPayments(@PathVariable String id) {
-        return homeService.getPayments(id);
+    public List<HomeResponse> getHomesByUserId(@PathVariable Long id) {
+        return homeService.getHomesByUserId(id);
     }
 
     @PostMapping

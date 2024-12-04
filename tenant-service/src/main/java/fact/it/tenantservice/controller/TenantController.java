@@ -1,6 +1,7 @@
 package fact.it.tenantservice.controller;
 
 
+import fact.it.tenantservice.dto.PaymentResponse;
 import fact.it.tenantservice.dto.TenantRequest;
 import fact.it.tenantservice.dto.TenantResponse;
 import fact.it.tenantservice.service.TenantService;
@@ -20,28 +21,28 @@ import java.util.stream.Collectors;
 public class TenantController {
     private final TenantService tenantService;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void createProduct
-            (@RequestBody TenantRequest tenantRequest) {
-        tenantService.createTenant(tenantRequest);
-    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.OK)
+//    public void createTenant
+//            (@RequestBody TenantRequest tenantRequest) {
+//        tenantService.createTenant(tenantRequest);
+//    }
 
-    @GetMapping("/all")
-    @ResponseStatus(HttpStatus.OK)
-    public List<TenantResponse> getAllTenants() {
-        return tenantService.getAllTenants();
-    }
+//    @GetMapping
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<TenantResponse> getTenantsByIds(@RequestParam List<Long> ids) {
+//        return tenantService.getTenantsByIds(ids);
+//    }
 
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<TenantResponse> getTenantsByIds(@RequestParam List<Long> ids) {
-        return tenantService.getTenantsByIds(ids);
-    }
+//    @GetMapping("/all")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<TenantResponse> getAllTenants() {
+//        return tenantService.getAllTenants();
+//    }
 
-    @GetMapping("/home/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TenantResponse getTenantByHomeId(@PathVariable String id) {
-        return tenantService.getTenantByHomeId(id);
+    public TenantResponse getTenantById(@PathVariable String id) {
+        return tenantService.getTenantById(id);
     }
 }

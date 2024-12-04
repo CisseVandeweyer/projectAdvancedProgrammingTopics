@@ -1,5 +1,6 @@
 package fact.it.tenantservice.service;
 
+import fact.it.tenantservice.dto.PaymentResponse;
 import fact.it.tenantservice.dto.TenantRequest;
 import fact.it.tenantservice.dto.TenantResponse;
 import fact.it.tenantservice.model.Tenant;
@@ -9,6 +10,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,14 +27,12 @@ public class TenantService {
                     .name("Jos")
                     .description("fffssqfssqsqfsq")
                     .email("jos@jos.com")
-                    .homeId("6749d32a57152b1518eb50e3")
                     .build();
 
             Tenant tenant1 = Tenant.builder()
                     .name("Marie")
                     .description("hello")
                     .email("marie@dfqfqs.com")
-                    .homeId("67499f56d8cd7f17bc5ab6ec")
                     .build();
 
             tenantRepository.save(tenant);
@@ -40,33 +40,34 @@ public class TenantService {
         }
     }
 
-    public void createTenant(TenantRequest tenantRequest){
-        Tenant tenant = Tenant.builder()
-                .name(tenantRequest.getName())
-                .email(tenantRequest.getEmail())
-                .description(tenantRequest.getDescription())
-                .build();
+//    public void createTenant(TenantRequest tenantRequest){
+//        Tenant tenant = Tenant.builder()
+//                .name(tenantRequest.getName())
+//                .email(tenantRequest.getEmail())
+//                .description(tenantRequest.getDescription())
+//                .build();
+//
+//        tenantRepository.save(tenant);
+//    }
+//
+//    public List<TenantResponse> getAllTenants() {
+//        List<Tenant> tenants = tenantRepository.findAll();
+//        return tenants.stream().map(this::mapToTenantResponse).toList();
+//    }
+//
+//    public List<TenantResponse> getTenantsByIds(List<Long> ids) {
+//        List<Tenant> tenants = tenantRepository.findAllByIds(ids);
+//        return tenants.stream().map(this::mapToTenantResponse).toList();
+//    }
 
-        tenantRepository.save(tenant);
-    }
-
-    public List<TenantResponse> getAllTenants() {
-        List<Tenant> tenants = tenantRepository.findAll();
-        return tenants.stream().map(this::mapToTenantResponse).toList();
-    }
-
-    public List<TenantResponse> getTenantsByIds(List<Long> ids) {
-        List<Tenant> tenants = tenantRepository.findAllByIds(ids);
-        return tenants.stream().map(this::mapToTenantResponse).toList();
-    }
-
-    public TenantResponse getTenantByHomeId(String homeId) {
-        Optional<Tenant> tenant = tenantRepository.findAllByHomeId(homeId).stream().findFirst();
-        return tenant.map(this::mapToTenantResponse).orElse(null);
+    public TenantResponse getTenantById(String tenantId) {
+        Tenant tenant = tenantRepository.findTenantById(tenantId);
+        return mapToTenantResponse(tenant);
     }
 
     private TenantResponse mapToTenantResponse(Tenant tenant) {
         return TenantResponse.builder()
+                .id(tenant.getId())
                 .name(tenant.getName())
                 .email(tenant.getEmail())
                 .description(tenant.getDescription())

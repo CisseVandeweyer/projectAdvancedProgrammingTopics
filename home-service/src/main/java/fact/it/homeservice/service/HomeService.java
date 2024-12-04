@@ -2,13 +2,13 @@ package fact.it.homeservice.service;
 
 import fact.it.homeservice.dto.HomeRequest;
 import fact.it.homeservice.dto.HomeResponse;
-import fact.it.homeservice.dto.PaymentResponse;
-import fact.it.homeservice.dto.TenantResponse;
 import fact.it.homeservice.model.Home;
 import fact.it.homeservice.repository.HomeRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -24,23 +24,26 @@ public class HomeService {
     private final HomeRepository homeRepository;
     private final WebClient webClient;
 
-    @Value("${tenantService.baseurl}")
-    private String tenantServiceBaseUrl;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Value("${maintenanceService.baseurl}")
     private String maintenanceServiceBaseUrl;
 
-
     @PostConstruct
     public void loadData() {
+        mongoTemplate.getDb().drop();
+
         if (homeRepository.count() <= 0) {
             Home home = Home.builder()
+                    .userId(1L)
                     .address("Oude Veerlebaan 12")
                     .yearOfConstruction("2012")
                     .type("house")
                     .build();
 
             Home home1 = Home.builder()
+                    .userId(2L)
                     .address("Kerkhofweg 18")
                     .yearOfConstruction("2002")
                     .type("house")
@@ -61,7 +64,12 @@ public class HomeService {
         return mapToHomeResponse(home);
     }
 
-    public void addHome(HomeRequest homeRequest){
+    public List<HomeResponse> getHomesByUserId(Long id) {
+        List<Home> home = homeRepository.findHomesByUserId(id);
+        return home.stream().map(this::mapToHomeResponse).toList();
+    }
+
+    public void addHome(HomeRequest homeRequest) {
         Home home = Home.builder()
                 .type(homeRequest.getType())
                 .yearOfConstruction(homeRequest.getYearOfConstruction())
@@ -91,28 +99,13 @@ public class HomeService {
         }
     }
 
-    public List<PaymentResponse> getPayments(String id) {
-        Home home = homeRepository.findHomeById(id);
-
-        if (home != null) {
-            // Request naar payment service
-        }
-        return new ArrayList<>();
-    }
-
     private HomeResponse mapToHomeResponse(Home home) {
-        TenantResponse tenant = webClient.get()
-                .uri("http://" + tenantServiceBaseUrl + "/api/tenant/home/{id}", home.getId())
-                .retrieve()
-                .bodyToMono(TenantResponse.class)
-                .block();
-
         return HomeResponse.builder()
                 .id(home.getId())
+                .userId(home.getUserId())
                 .address(home.getAddress())
                 .yearOfConstruction(home.getYearOfConstruction())
                 .type(home.getType())
-                .tenant(tenant)
                 .build();
     }
 }

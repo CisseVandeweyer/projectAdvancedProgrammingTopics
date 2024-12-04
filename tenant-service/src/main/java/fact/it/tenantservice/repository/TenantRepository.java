@@ -11,6 +11,7 @@ public interface TenantRepository extends JpaRepository<Tenant, Long> {
     @Query("SELECT t FROM Tenant t WHERE t.id IN :ids")
     List<Tenant> findAllByIds(@Param("ids") List<Long> ids);
 
-    @Query("SELECT t FROM Tenant t WHERE t.homeId = :id")
-    List<Tenant> findAllByHomeId(@Param("id") String id);
+    @Query("SELECT t FROM Tenant t WHERE t.id = :id")
+    Tenant findTenantById(String id);
+
 }

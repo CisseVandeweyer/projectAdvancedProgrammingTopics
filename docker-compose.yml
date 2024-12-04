@@ -15,6 +15,31 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: abc123
 
+  mysql-home-tenant:
+    image: mysql:latest
+    ports:
+      - 3334:3306
+    volumes:
+      - mysql_home_tenant_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123
+
+  home-tenant-service:
+    image: sanderjannes/home-tenant-service
+    depends_on:
+      - mysql-home-tenant
+      - home-service
+      - tenant-service
+    ports:
+      - 8086:8086
+    environment:
+      MYSQL_DB_USERNAME: root
+      MYSQL_DB_PASSWORD: abc123
+      MYSQL_DB_HOST: mysql-home-tenant
+      MYSQL_DB_PORT: 3306
+      HOME_SERIVCE_BASEURL: home-service:8081
+      TENANT_SERIVCE_BASEURL: tenant-service:8082
+
   home-service:
     image: sanderjannes/home-service
     ports:
@@ -22,7 +47,6 @@ services:
     environment:
       MONGO_DB_HOST: mongo-home
       MONGO_DB_PORT: 27017
-      TENANT_SERVICE_BASEURL: tenant-service:8082
       MAINTENANCE_SERVICE_BASEURL: "---MAINTENANCE SERVICE...---"
     depends_on:
       - mongo-home
@@ -36,6 +60,8 @@ services:
       MYSQL_DB_PASSWORD: abc123
       MYSQL_DB_HOST: mysql-tenant
       MYSQL_DB_PORT: 3306
+    depends_on:
+      - mysql-tenant
 
   api-gateway:
     depends_on:
@@ -54,3 +80,4 @@ services:
 volumes:
   mongodb_home_data:
   mysql_tenant_data:
+  mysql_home_tenant_data:
