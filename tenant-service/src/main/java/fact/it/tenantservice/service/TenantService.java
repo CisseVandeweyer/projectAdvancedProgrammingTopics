@@ -1,7 +1,5 @@
 package fact.it.tenantservice.service;
 
-import fact.it.tenantservice.dto.PaymentResponse;
-import fact.it.tenantservice.dto.TenantRequest;
 import fact.it.tenantservice.dto.TenantResponse;
 import fact.it.tenantservice.model.Tenant;
 import fact.it.tenantservice.repository.TenantRepository;
@@ -10,9 +8,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor

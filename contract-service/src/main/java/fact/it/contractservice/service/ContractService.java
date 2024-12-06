@@ -58,12 +58,12 @@ public class ContractService {
 
     public List<ContractResponse> getAll() {
         List<Contract> tenants = contractRepository.findAll();
-        return tenants.stream().map(this::mapToHomeTenantResponse).toList();
+        return tenants.stream().map(this::mapToContractResponse).toList();
     }
 
-    public List<ContractResponse> getHomeTenantsByHomeId(String id) {
-        List<Contract> contracts = contractRepository.findHomeTenantsByHomeId(id);
-        return contracts.stream().map(this::mapToHomeTenantResponse).toList();
+    public List<ContractResponse> getAllContractsByHomeId(String id) {
+        List<Contract> contracts = contractRepository.findContractsByHomeId(id);
+        return contracts.stream().map(this::mapToContractResponse).toList();
     }
 
 //    public HomeTenantResponse getCurrentHomeTenantByHomeId(String id) {
@@ -75,7 +75,7 @@ public class ContractService {
 //        return null;
 //    }
 
-    private ContractResponse mapToHomeTenantResponse(Contract contract) {
+    private ContractResponse mapToContractResponse(Contract contract) {
 //        HomeResponse home = webClient.get()
 //                .uri("http://" + homeServiceBaseUrl + "/api/home/{id}", contract.getHomeId())
 //                .retrieve()
