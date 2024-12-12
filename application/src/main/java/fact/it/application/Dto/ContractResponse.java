@@ -1,16 +1,13 @@
-package fact.it.contractservice.dto;
+package fact.it.application.Dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class ContractResponse {
     private TenantResponse tenant;
     private LocalDate startDate;

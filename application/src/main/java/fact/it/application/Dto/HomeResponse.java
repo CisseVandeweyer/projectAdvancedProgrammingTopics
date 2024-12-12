@@ -1,14 +1,14 @@
-package fact.it.contractservice.dto;
+package fact.it.application.Dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class HomeResponse {
     private String id;
 

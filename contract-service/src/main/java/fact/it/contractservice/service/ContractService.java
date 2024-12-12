@@ -31,23 +31,24 @@ public class ContractService {
     public void loadData() {
         if (contractRepository.count() <= 0) {
             Contract contract = Contract.builder()
-                    .homeId("6749e4c84045c20aaf6cd70d")
+                    .homeId("6759a5649843d777d2041343")
                     .tenantId(1L)
-                    .startDate(LocalDate.now())
-                    .endDate(LocalDate.now())
+                    .startDate(LocalDate.now().minusDays(26))
+                    .endDate(LocalDate.now().minusDays(4))
                     .build();
 
             Contract contract1 = Contract.builder()
-                    .homeId("6749e4c84045c20aaf6cd70e")
+                    .homeId("6759a5649843d777d2041343")
                     .tenantId(2L)
                     .startDate(LocalDate.now().minusDays(7))
                     .endDate(LocalDate.now().minusDays(2))
                     .build();
 
             Contract contract2 = Contract.builder()
-                    .homeId("6749e4c84045c20aaf6cd70e")
+                    .homeId("6759a5649843d777d2041343")
                     .tenantId(1L)
                     .startDate(LocalDate.now().minusDays(1))
+                    .endDate(LocalDate.now().plusDays(30))
                     .build();
 
             contractRepository.save(contract);
@@ -66,22 +67,7 @@ public class ContractService {
         return contracts.stream().map(this::mapToContractResponse).toList();
     }
 
-//    public HomeTenantResponse getCurrentHomeTenantByHomeId(String id) {
-//        HomeTenant currentHomeTenant = homeTenantRepository.findCurrentTenantByHomeId(id);
-//        if (currentHomeTenant != null) {
-//            return mapToHomeTenantResponse(currentHomeTenant);
-//        }
-//
-//        return null;
-//    }
-
     private ContractResponse mapToContractResponse(Contract contract) {
-//        HomeResponse home = webClient.get()
-//                .uri("http://" + homeServiceBaseUrl + "/api/home/{id}", contract.getHomeId())
-//                .retrieve()
-//                .bodyToMono(HomeResponse.class)
-//                .block();
-
         TenantResponse tenant = webClient.get()
                 .uri("http://" + tenantServiceBaseUrl + "/api/tenant/{id}", contract.getTenantId())
                 .retrieve()
@@ -89,10 +75,15 @@ public class ContractService {
                 .block();
 
         return ContractResponse.builder()
-//                .home(home)
                 .tenant(tenant)
                 .startDate(contract.getStartDate())
                 .endDate(contract.getEndDate())
+                .isActive(isActiveContract(contract))
                 .build();
+    }
+
+    public boolean isActiveContract(Contract contract) {
+        LocalDate today = LocalDate.now();
+        return !contract.getStartDate().isAfter(today) && !contract.getEndDate().isBefore(today);
     }
 }

@@ -28,13 +28,7 @@ public class HomeController {
     public HomeResponse getHomeById(@PathVariable String id) {
         return homeService.getHomeById(id);
     }
-
-//    @GetMapping("/{id}/payments")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<PaymentResponse> getAllPayments(@PathVariable String id) {
-//        return homeService.getPayments(id);
-//    }
-
+    
     @GetMapping("/user/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<HomeResponse> getHomesByUserId(@PathVariable Long id) {
